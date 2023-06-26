@@ -1,7 +1,7 @@
 // import React from 'react';
 // import axios from 'axios';
 
-// class BestMovies extends React.Component {
+// class Main extends React.Component {
 //   constructor(props) {
 //     super(props);
 //     this.state = {
@@ -35,4 +35,4 @@
 //   }
 // }
 
-// export default BestMovies;
+// export default Main;
