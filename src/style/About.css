@@ -1,0 +1,15 @@
+.about-us-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.about-us-title {
+  margin-bottom: 20px;
+}
+
+.card {
+  margin-bottom: 20px;
+}

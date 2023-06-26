@@ -1,38 +1,34 @@
-// import React from 'react';
-// import axios from 'axios';
+import React from 'react';
+import axios from 'axios';
 
-// class Main extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       movie: [],
-      
-//     };
-//   }
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      movies: [],
+    };
+  }
 
-//   addMovie = async () => {
-//     try {
-//       let url = `${process.env.REACT_APP_SERVER}/movie`;
-//       let MoviesFromDB = await axios.get(url);
+  async componentDidMount() {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/movies`;
+      let moviesFromDB = await axios.get(url);
 
-//       this.setState({
-//         books: MoviesFromDB.data
-//       });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
+      this.setState({
+        movies: moviesFromDB.data
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
+  render() {
+    return (
+      <div>
+        <h2 >Watch List</h2>
+      </div>
+    );
+  }
+}
 
-
-
-//   render() {
-//     return (
-//       <>
-  
-//       </>
-//     );
-//   }
-// }
-
-// export default Main;
+export default Main;

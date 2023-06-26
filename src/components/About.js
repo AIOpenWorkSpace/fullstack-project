@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
-// import '../styles/About.css';
+import '../style/About.css';
 
 class Profile extends Component {
   render() {
