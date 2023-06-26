@@ -5,14 +5,14 @@
 //   constructor(props) {
 //     super(props);
 //     this.state = {
-//       movies: [],
+//       movie: [],
       
 //     };
 //   }
 
-//   getMovies = async () => {
+//   addMovie = async () => {
 //     try {
-//       let url = `${process.env.REACT_APP_SERVER}/movies`;
+//       let url = `${process.env.REACT_APP_SERVER}/movie`;
 //       let MoviesFromDB = await axios.get(url);
 
 //       this.setState({
