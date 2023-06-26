@@ -38,7 +38,6 @@ Stretch goals:
 - User can review and update the saved ratings and notes in subsequent sessions.
 - See readme.md for detailed domain model and data schema
 
-
 ## Non-Functional Requirements
 
 - Security: The application will implement Auth0 for authentication
