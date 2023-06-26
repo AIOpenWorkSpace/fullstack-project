@@ -18,7 +18,7 @@ The vision of this product is to provide parents with a comprehensive tool that 
 - The product will not provide real-time streaming of TV shows or movies (training data only up to date with ChatGPT data)
 - The product will not generate records for shows which do not exist as of ChatGPT's training data
 
-## Minimum Viable Product (MVP) functionality:
+## Minimum Viable Product (MVP) functionality
 
 - Summaries and editable ratings for TV shows and movies in categories aligned with family values.
 - Saving and reviewing of results, including modified ratings and notes from previous sessions.
