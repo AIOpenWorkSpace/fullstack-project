@@ -2,8 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/Main.css';
+import Card from 'react-bootstrap/Card';
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -39,54 +42,116 @@ class Main extends React.Component {
     }
   };
 
+
+  renderMovieDetailsAccordion = () => {
+    const { searchResult } = this.state;
+
+    if (!searchResult) {
+      return null;
+    }
+
+    return (
+      <div className="div-accordion">
+
+    <div className="card-div">
+      <Card style={{ width: '18rem' }} className="text-center">
+            <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${searchResult.imageURL}`} alt="Movie Poster" />
+         <Card.Body>
+          <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
+         </Card.Body>
+      </Card>
+    </div>
+
+
+   <Accordion className="whole-accordion">
+  <Accordion.Item eventKey="0">
+    <Accordion.Header className="accordion-header">
+      <p>Language Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.languageDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="1">
+    <Accordion.Header className="accordion-header">
+      <p>Drug Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.drugDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="2">
+    <Accordion.Header className="accordion-header">
+      <p>Sex Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.sexDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="3">
+    <Accordion.Header className="accordion-header">
+      <p>Role Model Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.roleModelDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="4">
+    <Accordion.Header className="accordion-header">
+      <p>Message Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.messageDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="5">
+    <Accordion.Header className="accordion-header">
+      <p>Representation Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.representationDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="6">
+    <Accordion.Header className="accordion-header">
+      <p>Violence Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.violenceDescription}</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="7">
+    <Accordion.Header className="accordion-header">
+      <p>Product Description</p>
+    </Accordion.Header>
+    <Accordion.Body>{searchResult.productDescription}</Accordion.Body>
+  </Accordion.Item>
+</Accordion>
+
+    </div>
+    
+    );
+  };
+
   render() {
-    const { searchResult, error } = this.state;
+    const error = this.state.error;
+    const searchResult = this.state.searchResult;
   
     return (
       <div className="container">
-        <h2>Title Restrictions for: </h2>
-        <p>Please use the search bar below to check the maturity level of movies.</p>
+        <h2>Title Restrictions for:</h2>
+        <p>Use the search bar to check the maturity level of movies.</p>
+  
+        <div className="search-container">
+          <Form onSubmit={this.handleSearchSubmit}>
+            <div className="d-flex">
+              <Form.Group controlId="searchQuery" className="me-2">
+                <Form.Control
+                  type="text"
+                  value={this.state.searchQuery}
+                  onChange={this.handleSearchChange}
+                  placeholder="Search Movies"
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Search
+              </Button>
+            </div>
+          </Form>
+        </div>
+  
         {error && <p className="error-message">{error}</p>}
-        {searchResult && (
-          <>
-            <div>
-              <img
-                src={searchResult.imageURL}
-                alt={searchResult.title}
-                className="result-image"
-              />
-            </div>
-            <div>
-              <h3>Result</h3>
-              <p>{searchResult.languageDescription}</p>
-              <p>{searchResult.drugDescription}</p>
-              <p>{searchResult.sexDescription}</p>
-              <p>{searchResult.roleModelDescription}</p>
-              <p>{searchResult.messageDescription}</p>
-              <p>{searchResult.representationDescription}</p>
-              <p>{searchResult.violenceDescription}</p>
-              <p>{searchResult.productDescription}</p>
-            </div>
-          </>
-        )}
-        <Form onSubmit={this.handleSearchSubmit}>
-          <Form.Group controlId="searchQuery">
-            <Form.Control
-              type="text"
-              value={this.state.searchQuery}
-              onChange={this.handleSearchChange}
-              placeholder="Search Movies"
-            />
-          </Form.Group>
-          <div className="button-container">
-            <Button variant="primary" type="submit">
-              Search
-            </Button>
-          </div>
-        </Form>
+        {searchResult && this.renderMovieDetailsAccordion()}
       </div>
     );
   }
-};
+}
 
 export default Main;
+
