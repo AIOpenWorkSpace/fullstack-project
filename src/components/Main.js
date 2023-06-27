@@ -6,7 +6,10 @@ import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
+
+
 import { withAuth0 } from '@auth0/auth0-react';
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -43,6 +46,15 @@ class Main extends React.Component {
     }
   };
 
+
+  addToWatchlist = async (movie) => {
+    try {
+      await axios.post(`${process.env.REACT_APP_SERVER}/movies`, movie);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   handleSaveMovie = async () => {
     if(this.props.auth0.isAuthenticated){
       const res = await this.props.auth0.getIdTokenClaims();
@@ -60,6 +72,7 @@ class Main extends React.Component {
     }
   }
 
+
   renderMovieDetailsAccordion = () => {
     const { searchResult } = this.state;
 
@@ -69,15 +82,15 @@ class Main extends React.Component {
 
     return (
       <div className="div-accordion">
-
-    <div className="card-div">
-      <Card style={{ width: '18rem' }} className="text-center">
+        <div className="card-div">
+          <Card style={{ width: '18rem' }} className="text-center">
             <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${searchResult.imageURL}`} alt="Movie Poster" />
-         <Card.Body>
-          <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
-         </Card.Body>
-      </Card>
-    </div>
+            <Card.Body>
+              <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
+              <Button onClick={() => this.addToWatchlist(searchResult)}>Add to Watch List</Button>
+            </Card.Body>
+          </Card>
+        </div>
 
 
    <Accordion className="whole-accordion">
@@ -139,10 +152,12 @@ class Main extends React.Component {
   render() {
     const error = this.state.error;
     const searchResult = this.state.searchResult;
+    // const watchlist = this.state.watchlist; 
   
     return (
-      <div className="container">
-        <h2>Title Restrictions for:</h2>
+        <div className="container-main" style={{marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100vh' }}>
+  
+        <h2 clas>Title Restrictions for:</h2>
         <p>Use the search bar to check the maturity level of movies.</p>
   
         <div className="search-container">
