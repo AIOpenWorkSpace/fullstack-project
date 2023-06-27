@@ -1,31 +1,31 @@
 import React from 'react';
-import { Navbar, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Navbar, Nav, Container} from 'react-bootstrap';
 import '../style/Header.css'; 
+import { FaFilm } from 'react-icons/fa';
+import LogoutButton from '../Logout'
 
 class Header extends React.Component {
   render() {
     return (
-      <div className="header">
-        <div className="title">Movies Company</div>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="navigation">
-          <NavItem>
-            <Link to="/" className="nav-link">
-              Main
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/watchlist" className="nav-link">
-              Watch List
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/about" className="nav-link">
-              About
-            </Link>
-          </NavItem>
+      <>
+        {/* <div className="title">Movies Company</div> */}
+        <Navbar expand="lg" bg="dark" variant="dark" className="navigation">
+          <Container className="nav-container">
+          <Navbar.Brand className="brand ml-auto" href="/"><FaFilm /> Movies Company</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <div className ="d-flex align-items-center">
+            <Nav.Link href="/">Main</Nav.Link>
+            <Nav.Link href="/watchlist">Watch List</Nav.Link>
+            <Nav.Link href="/about">Our Team</Nav.Link>
+            <LogoutButton />
+            </div>
+          </Nav>
+          </Navbar.Collapse>
+          </Container>
         </Navbar>
-      </div>
+      </>
     );
   }
 }

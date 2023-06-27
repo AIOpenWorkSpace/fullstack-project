@@ -7,6 +7,7 @@ import About from './components/About';
 import Login from './Login';
 import Logout from './Logout';
 import { withAuth0 } from '@auth0/auth0-react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   BrowserRouter as Router,
@@ -21,9 +22,8 @@ class App extends React.Component {
         {
           this.props.auth0.isAuthenticated ?
             <Router>
-              <Logout />
+               
               <Header />
-
               <Routes>
 
                 <Route exact path="/" element={<Main />}>

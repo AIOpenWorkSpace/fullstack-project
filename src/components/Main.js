@@ -3,7 +3,6 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
 import { withAuth0 } from '@auth0/auth0-react';
@@ -141,7 +140,7 @@ class Main extends React.Component {
     const searchResult = this.state.searchResult;
   
     return (
-      <div className="container">
+      <div className="movie-container">
         <h2>Title Restrictions for:</h2>
         <p>Use the search bar to check the maturity level of movies.</p>
   
