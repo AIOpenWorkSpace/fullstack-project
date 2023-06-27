@@ -7,6 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
 
+
+import { withAuth0 } from '@auth0/auth0-react';
+
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -35,11 +39,13 @@ class Main extends React.Component {
         searchResult: updatedMovieFromAxios.data.data,
         error: '',
       });
+      
     } catch (error) {
       console.log(error.message);
       this.setState({ error: 'An error occurred. Please try again.' });
     }
   };
+
 
   addToWatchlist = async (movie) => {
     try {
@@ -48,6 +54,24 @@ class Main extends React.Component {
       console.log(error.message);
     }
   };
+
+  handleSaveMovie = async () => {
+    if(this.props.auth0.isAuthenticated){
+      const res = await this.props.auth0.getIdTokenClaims();
+      const jwt = res.__raw;
+
+      const config = {
+        headers: { "Authorization": `Bearer ${jwt}` },
+        method: 'post',
+        baseURL: process.env.REACT_APP_SERVER,
+        url: '/movies',
+        data: this.state.searchResult
+      }
+/**NOTE: do we want the return set to state?  */
+      let savedMovie = await axios(config);
+    }
+  }
+
 
   renderMovieDetailsAccordion = () => {
     const { searchResult } = this.state;
@@ -161,5 +185,5 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+export default withAuth0(Main);
 
