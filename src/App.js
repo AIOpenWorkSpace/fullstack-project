@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
-// import WatchList from './components/WatchList';
+import WatchList from './components/WatchList';
 import About from './components/About';
 // import Footer from './components/Footer';
 
@@ -26,8 +26,8 @@ class App extends React.Component {
           <Route exact path="/" element={<Main />}>
            </Route>
 
-            {/* <Route exact path="/watchlist" element={<WatchList/>}>
-            </Route>  */}
+           <Route exact path="/watchlist" element={<WatchList />} />
+
 
             <Route exact path="/about" element={<About/>} >
             </Route>
