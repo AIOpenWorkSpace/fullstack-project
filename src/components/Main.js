@@ -9,28 +9,11 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: [],
       searchQuery: '',
       searchResult: null,
+      error: '',
     };
   }
-
-  componentDidMount() {
-    this.getMovies();
-  }
-
-  getMovies = async () => {
-    try {
-      let url = `${process.env.REACT_APP_SERVER}/movies`;
-      let updatedMovieFromAxios = await axios.get(url);
-
-      this.setState({
-        movies: updatedMovieFromAxios.data,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   handleSearchChange = (event) => {
     this.setState({ searchQuery: event.target.value });
@@ -41,28 +24,49 @@ class Main extends React.Component {
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for teenagers: language usage, alcohol and other drugs, portrayal of ex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.`;
 
     try {
-      let updatedMovieFromAxios = await axios.post(`${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`, { prompt });
+      let updatedMovieFromAxios = await axios.post(
+        `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
+        { prompt }
+      );
 
       this.setState({
         searchResult: updatedMovieFromAxios.data.data,
+        error: '',
       });
-
-      await this.getMovies();
     } catch (error) {
       console.log(error.message);
+      this.setState({ error: 'An error occurred. Please try again.' });
     }
   };
 
   render() {
+    const { searchResult, error } = this.state;
+  
     return (
       <div className="container">
         <h2>Title Restrictions for: </h2>
         <p>Please use the search bar below to check the maturity level of movies.</p>
-        {this.state.searchResult && (
+        {error && <p className="error-message">{error}</p>}
+        {searchResult && (
           <>
-            <img src={this.state.searchResult.imageURL} alt={this.state.searchResult.title} />
-            <h3>Result</h3>
-            <p>{this.state.searchResult.description}</p>
+            <div>
+              <img
+                src={searchResult.imageURL}
+                alt={searchResult.title}
+                className="result-image"
+              />
+            </div>
+            <div>
+              <h3>Result</h3>
+              <p>{searchResult.languageDescription}</p>
+              <p>{searchResult.drugDescription}</p>
+              <p>{searchResult.sexDescription}</p>
+              <p>{searchResult.roleModelDescription}</p>
+              <p>{searchResult.messageDescription}</p>
+              <p>{searchResult.representationDescription}</p>
+              <p>{searchResult.violenceDescription}</p>
+              <p>{searchResult.productDescription}</p>
+            </div>
           </>
         )}
         <Form onSubmit={this.handleSearchSubmit}>
@@ -80,19 +84,9 @@ class Main extends React.Component {
             </Button>
           </div>
         </Form>
-        {/* {this.state.movies.map((movie) => (
-          <div key={movie._id}>
-            <h3>{movie.title}</h3>
-            <p>Language Rating: {movie.languageRating}</p>
-            <p>Language Description: {movie.languageDescription}</p>
-            <p>Drug Rating: {movie.drugRating}</p>
-            <p>Drug Description: {movie.drugDescription}</p>
-            <p>Sex Description: {movie.sexDescription}</p>
-          </div>
-        ))} */}
       </div>
     );
   }
-}
+};
 
 export default Main;
