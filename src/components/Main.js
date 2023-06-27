@@ -3,7 +3,6 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
 
@@ -155,8 +154,10 @@ class Main extends React.Component {
     // const watchlist = this.state.watchlist; 
   
     return (
+
+      <div className="movie-container">
+        <h2>Title Restrictions for:</h2>
         <div className="container-main" style={{marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100vh' }}>
-  
         <h2 clas>Title Restrictions for:</h2>
         <p>Use the search bar to check the maturity level of movies.</p>
   
