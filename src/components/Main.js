@@ -5,8 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
-
-
 import { withAuth0 } from '@auth0/auth0-react';
 
 
@@ -157,8 +155,6 @@ class Main extends React.Component {
 
       <div className="movie-container">
         <h2>Title Restrictions for:</h2>
-        <div className="container-main" style={{marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', height: '100vh' }}>
-        <h2 clas>Title Restrictions for:</h2>
         <p>Use the search bar to check the maturity level of movies.</p>
   
         <div className="search-container">
