@@ -3,8 +3,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style/Main.css'; 
-
+import '../style/Main.css';
 
 class Main extends React.Component {
   constructor(props) {
@@ -12,7 +11,7 @@ class Main extends React.Component {
     this.state = {
       movies: [],
       searchQuery: '',
-      searchResult: '',
+      searchResult: null,
     };
   }
 
@@ -25,8 +24,6 @@ class Main extends React.Component {
       let url = `${process.env.REACT_APP_SERVER}/movies`;
       let updatedMovieFromAxios = await axios.get(url);
 
-      console.log(updatedMovieFromAxios);
-
       this.setState({
         movies: updatedMovieFromAxios.data,
       });
@@ -35,15 +32,19 @@ class Main extends React.Component {
     }
   };
 
+  handleSearchChange = (event) => {
+    this.setState({ searchQuery: event.target.value });
+  };
+
   handleSearchSubmit = async (event) => {
     event.preventDefault();
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for teenagers: language usage, alcohol and other drugs, portrayal of ex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.`;
 
     try {
-      let updatedMovieFromAxios = await axios.post(`${process.env.REACT_APP_SERVER}/ask`, { prompt });
+      let updatedMovieFromAxios = await axios.post(`${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`, { prompt });
 
       this.setState({
-        searchResult: updatedMovieFromAxios.data,
+        searchResult: updatedMovieFromAxios.data.data,
       });
 
       await this.getMovies();
@@ -52,14 +53,18 @@ class Main extends React.Component {
     }
   };
 
- 
-
   render() {
     return (
       <div className="container">
         <h2>Title Restrictions for: </h2>
         <p>Please use the search bar below to check the maturity level of movies.</p>
-        {/* <img src={this.state.searchResult.imageURL} alt={this.state.searchResult.title} /> */}
+        {this.state.searchResult && (
+          <>
+            <img src={this.state.searchResult.imageURL} alt={this.state.searchResult.title} />
+            <h3>Result</h3>
+            <p>{this.state.searchResult.description}</p>
+          </>
+        )}
         <Form onSubmit={this.handleSearchSubmit}>
           <Form.Group controlId="searchQuery">
             <Form.Control
@@ -70,19 +75,11 @@ class Main extends React.Component {
             />
           </Form.Group>
           <div className="button-container">
-          <Button variant="primary" type="submit">
-            Search
-          </Button>
+            <Button variant="primary" type="submit">
+              Search
+            </Button>
           </div>
         </Form>
-
-        {this.state.searchResult && (
-          <div>
-            <h3>Result</h3>
-            <p>{this.state.searchResult}</p>
-          </div>
-        )}
-
         {/* {this.state.movies.map((movie) => (
           <div key={movie._id}>
             <h3>{movie.title}</h3>
@@ -99,4 +96,3 @@ class Main extends React.Component {
 }
 
 export default Main;
-
