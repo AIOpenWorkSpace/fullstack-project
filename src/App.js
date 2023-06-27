@@ -4,8 +4,9 @@ import Main from './components/Main';
 // import WatchList from './components/WatchList';
 import About from './components/About';
 // import Footer from './components/Footer';
-
-
+import Login from './Login';
+import Logout from './Logout';
+import { withAuth0 } from '@auth0/auth0-react';
 
 import {
   BrowserRouter as Router,
@@ -17,27 +18,33 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Router>
+        {
+          this.props.auth0.isAuthenticated ?
+            <Router>
+              <Logout />
+              <Header />
 
-          <Header />
+              <Routes>
 
-          <Routes>
-            
-          <Route exact path="/" element={<Main />}>
-           </Route>
+                <Route exact path="/" element={<Main />}>
+                </Route>
 
-            {/* <Route exact path="/watchlist" element={<WatchList/>}>
-            </Route>  */}
+                {/* <Route exact path="/watchlist" element={<WatchList/>}>
+                </Route>  */}
 
-            <Route exact path="/about" element={<About/>} >
-            </Route>
+                <Route exact path="/about" element={<About />} >
+                </Route>
 
-          </Routes>
-          {/* <Footer /> */}
-        </Router>
+              </Routes>
+              {/* <Footer /> */}
+            </Router>
+            :
+            <Login />
+
+        }
       </>
     );
   }
 }
 
-export default App;
+export default withAuth0(App);
