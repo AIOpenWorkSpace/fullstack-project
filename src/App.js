@@ -17,27 +17,24 @@ import {
 
 class App extends React.Component {
   render() {
+    const { isAuthenticated, isLoading } = this.props.auth0;
+
+    if(isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
       <>
         {
-          this.props.auth0.isAuthenticated ?
+          isAuthenticated ?
             <Router>
                
               <Header />
               <Routes>
-
-                <Route exact path="/" element={<Main />}>
-                </Route>
-
-                {/* <Route exact path="/watchlist" element={<WatchList/>}>
-                </Route>  */}
-
-              <Route exact path="/watchlist" element={<WatchList />} />
-              <Route exact path="/about" element={<About />} />
-
-
+                <Route exact path="/" element={<Main />}/>
+                <Route exact path="/watchlist" element={<WatchList />} />
+                <Route exact path="/about" element={<About />} />
               </Routes>
-              {/* <Footer /> */}
+              
             </Router>
             :
             <Login />
