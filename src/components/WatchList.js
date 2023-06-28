@@ -28,19 +28,32 @@ class WatchList extends React.Component {
     }
   }
 
+  // deleteMovie = async (movieId) => {
+  //   try {
+  //     await axios.delete(`${process.env.REACT_APP_SERVER}/movies/${movieId}`);
+  
+  //     this.setState((prevState) => ({
+  //       watchlist: prevState.watchlist.filter((movie) => movie.id !== movieId),
+  //     }));
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     this.setState({ error: 'An error occurred while deleting the movie.' });
+  //   }
+  // };
+
   deleteMovie = async (movieId) => {
     try {
       await axios.delete(`${process.env.REACT_APP_SERVER}/movies/${movieId}`);
-  
       this.setState((prevState) => ({
         watchlist: prevState.watchlist.filter((movie) => movie.id !== movieId),
       }));
     } catch (error) {
-      console.log(error.message);
+      console.log('Error deleting movie:', error);
+      console.log('Response:', error.response);
       this.setState({ error: 'An error occurred while deleting the movie.' });
     }
   };
-
+  
 
   updateDescription = async (movieId, description) => {
     try {
@@ -90,7 +103,9 @@ class WatchList extends React.Component {
               <Card.Title className="movie-title">{movie.title.toUpperCase()}</Card.Title>
               <div className="button-group">
                 <Button className="description-button" onClick={() => this.openModal(movie)}>View Description</Button>
-                <Button className="delete-button" variant="danger" onClick={() => this.deleteMovie(movie.id)}>Delete</Button>
+                {/* <Button className="delete-button" variant="danger" onClick={() => this.deleteMovie(movie.id)}>Delete</Button> */}
+                <Button className="delete-button" variant="danger" onClick={() => this.deleteMovie(movie.id)}>Delete</Button> 
+
               </div>
             </div>
           </Card.Body>
