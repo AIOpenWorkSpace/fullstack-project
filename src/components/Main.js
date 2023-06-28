@@ -53,21 +53,31 @@ class Main extends React.Component {
   };
 
   handleSaveMovie = async () => {
-    if(this.props.auth0.isAuthenticated){
+    if (this.props.auth0.isAuthenticated) {
       const res = await this.props.auth0.getIdTokenClaims();
       const jwt = res.__raw;
-
+  
       const config = {
         headers: { "Authorization": `Bearer ${jwt}` },
         method: 'post',
         baseURL: process.env.REACT_APP_SERVER,
         url: '/movies',
-        data: this.state.searchResult
+        data: {
+          ...this.state.searchResult,
+          user: this.props.auth0.user.email
+        }
+      };
+
+      console.log(this.props.auth0.user.email);
+  
+      try {
+        let savedMovie = await axios(config);
+        console.log('Saved Movie: ', savedMovie);
+      } catch (error) {
+        console.log(error.message);
       }
-/**NOTE: do we want the return set to state?  */
-      let savedMovie = await axios(config);
     }
-  }
+  };
 
 
   renderMovieDetailsAccordion = () => {
@@ -84,7 +94,7 @@ class Main extends React.Component {
             <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${searchResult.imageURL}`} alt="Movie Poster" />
             <Card.Body>
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
-              <Button onClick={() => this.addToWatchlist(searchResult)}>Add to Watch List</Button>
+              <Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>
             </Card.Body>
           </Card>
         </div>
