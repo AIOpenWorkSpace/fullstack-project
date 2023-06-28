@@ -2,6 +2,7 @@
 
 nav {
   height: 10vh;
+  overflow: hidden;
 }
 
 .brand.navbar-brand {
