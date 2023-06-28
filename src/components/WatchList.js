@@ -29,13 +29,15 @@ class WatchList extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchWatchList();
+
+ componentDidMount() {
+  this.fetchWatchList();
+  console.log(this.props.auth0.user.email);  
   }
 
   async fetchWatchList() {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER}/movies?userName=${this.props.auth0.user.email}`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/movies?userEmail=${this.props.auth0.user.email}`);
       this.setState({ watchlist: response.data });
     } catch (error) {
       console.log(error.message);
@@ -91,6 +93,7 @@ class WatchList extends React.Component {
   closeModal = () => {
     this.setState({ showModal: false, isEditing: false });
   };
+
 
   enableEditing = () => {
     this.setState({ isEditing: true });
@@ -172,6 +175,25 @@ class WatchList extends React.Component {
                     Delete
                   </Button>
                 </div>
+
+  renderMovieCards = () => {
+    const { watchlist } = this.state;
+
+    console.log(watchlist);
+
+    return (
+      <div className="card-container">
+      {watchlist.map((movie, index) => (
+        
+        <Card key={index} style={{ width: '25rem' }}>
+          <Card.Img variant="top" src={movie.imageURL ? movie.imageURL : `https://place-hold.it/300x450/666/fff/000?text=${movie.title}`} alt="Movie Poster" />
+          <Card.Body>
+            <div className="card-content">
+              <Card.Title className="movie-title">{movie.title.toUpperCase()}</Card.Title>
+              <div className="button-group">
+                <Button className="description-button" onClick={() => this.openModal(movie)}>View Description</Button>
+                <Button className="delete-button" variant="danger" onClick={() => this.deleteMovie(movie._id)}>Delete</Button>
+
               </div>
             </Card.Body>
           </Card>
