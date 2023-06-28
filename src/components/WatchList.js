@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
 import '../style/WatchList.css';
+import { withAuth0 } from '@auth0/auth0-react';
 
 
 class WatchList extends React.Component {
@@ -18,9 +19,13 @@ class WatchList extends React.Component {
     };
   }
 
-  async componentDidMount() {
+ componentDidMount() {
+  this.fetchWatchList();  
+  }
+
+  async fetchWatchList() {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER}/movies`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/movies?userName=${this.props.auth0.user.email}`);
       this.setState({ watchlist: response.data });
     } catch (error) {
       console.log(error.message);
@@ -31,10 +36,8 @@ class WatchList extends React.Component {
   deleteMovie = async (movieId) => {
     try {
       await axios.delete(`${process.env.REACT_APP_SERVER}/movies/${movieId}`);
+      this.fetchWatchList();
   
-      this.setState((prevState) => ({
-        watchlist: prevState.watchlist.filter((movie) => movie.id !== movieId),
-      }));
     } catch (error) {
       console.log(error.message);
       this.setState({ error: 'An error occurred while deleting the movie.' });
@@ -90,7 +93,7 @@ class WatchList extends React.Component {
               <Card.Title className="movie-title">{movie.title.toUpperCase()}</Card.Title>
               <div className="button-group">
                 <Button className="description-button" onClick={() => this.openModal(movie)}>View Description</Button>
-                <Button className="delete-button" variant="danger" onClick={() => this.deleteMovie(movie.id)}>Delete</Button>
+                <Button className="delete-button" variant="danger" onClick={() => this.deleteMovie(movie._id)}>Delete</Button>
               </div>
             </div>
           </Card.Body>
@@ -182,7 +185,7 @@ class WatchList extends React.Component {
   }
 }
 
-export default WatchList;
+export default withAuth0(WatchList);
 
 // import React from 'react';
 // import axios from 'axios';
