@@ -15,6 +15,7 @@ class Main extends React.Component {
       searchQuery: '',
       searchResult: null,
       error: '',
+      addedToWatch: false
     };
   }
 
@@ -35,6 +36,7 @@ class Main extends React.Component {
       this.setState({
         searchResult: updatedMovieFromAxios.data.data,
         error: '',
+        addedToWatch: false
       });
       
     } catch (error) {
@@ -44,13 +46,13 @@ class Main extends React.Component {
   };
 
 
-  addToWatchlist = async (movie) => {
-    try {
-      await axios.post(`${process.env.REACT_APP_SERVER}/movies`, movie);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // addToWatchlist = async (movie) => {
+  //   try {
+  //     await axios.post(`${process.env.REACT_APP_SERVER}/movies`, movie);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   handleSaveMovie = async () => {
     if (this.props.auth0.isAuthenticated) {
@@ -73,6 +75,9 @@ class Main extends React.Component {
       try {
         let savedMovie = await axios(config);
         console.log('Saved Movie: ', savedMovie);
+        this.setState({
+          addedToWatch: true,
+        })
       } catch (error) {
         console.log(error.message);
       }
@@ -94,7 +99,13 @@ class Main extends React.Component {
             <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${searchResult.imageURL}`} alt="Movie Poster" />
             <Card.Body>
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
-              <Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>
+              {this.state.addedToWatch ? (
+                <Button variant="success">✅ Movie Saved to Watch List</Button>
+              ) : (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>)
+              }
+
+
+              
             </Card.Body>
           </Card>
         </div>
