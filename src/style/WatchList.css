@@ -59,4 +59,42 @@
   min-height: 100vh; 
 }
 
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-left: 100px;
+  color:blue;
+}
+
+.rating-input-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom:18px;
+}
+
+.rating-input-container p {
+  margin: 20px;
+}
+
+.accordion-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.accordion-header p:nth-child(1) {
+  margin-right: 20px;
+}
+
+.modal-dialog.custom-modal {
+  width: 75vw !important;
+  max-width: none !important;
+  height: 75vh !important;
+  max-height: none !important;
+}
+
 
