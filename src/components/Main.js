@@ -98,7 +98,7 @@ class Main extends React.Component {
       <div className="div-accordion">
         <div className="card-div">
           <Card style={{ width: '25rem' }} className="text-center">
-            <Card.Img variant="top" src={searchResult.imageURL ? searchResult.imageURL : `https://place-hold.it/300x500/666/fff/000?text=${searchResult.title}`} alt="Movie Poster" />
+            <Card.Img variant="top" src={searchResult.imageURL ? searchResult.imageURL : `https://place-hold.it/300x450/666/fff/000?text=${searchResult.title}`} alt="Movie Poster" />
             <Card.Body>
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
               {this.state.addedToWatch ? (

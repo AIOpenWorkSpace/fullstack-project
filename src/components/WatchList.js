@@ -20,12 +20,13 @@ class WatchList extends React.Component {
   }
 
  componentDidMount() {
-  this.fetchWatchList();  
+  this.fetchWatchList();
+  console.log(this.props.auth0.user.email);  
   }
 
   async fetchWatchList() {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER}/movies?userName=${this.props.auth0.user.email}`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/movies?userEmail=${this.props.auth0.user.email}`);
       this.setState({ watchlist: response.data });
     } catch (error) {
       console.log(error.message);
@@ -82,12 +83,7 @@ class WatchList extends React.Component {
       {watchlist.map((movie, index) => (
         
         <Card key={index} style={{ width: '25rem' }}>
-
-        {/* <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${searchResult.imageURL}`} alt="Movie Poster" /> */}
-
-
-        {/* < Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${movie.imageURL}`} alt="Movie Poster" /> */}
-
+          <Card.Img variant="top" src={movie.imageURL ? movie.imageURL : `https://place-hold.it/300x450/666/fff/000?text=${movie.title}`} alt="Movie Poster" />
           <Card.Body>
             <div className="card-content">
               <Card.Title className="movie-title">{movie.title.toUpperCase()}</Card.Title>
