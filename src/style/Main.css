@@ -9,7 +9,7 @@
 
 
 .whole-accordion {
-  width: 650px;
+  width: 60vw;
 }
 
 .whole-accordion {
@@ -47,6 +47,17 @@ p {
   z-index: 1;
   background-color: white;
   padding: 10px;
+  
+}
+
+.form-control,
+.form-select,
+.form-check {
+  margin-bottom: 10px; 
+}
+
+.search-button {
+  width: 100%;
 }
 
 
@@ -54,5 +65,5 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
-

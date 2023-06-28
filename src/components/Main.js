@@ -13,6 +13,8 @@ class Main extends React.Component {
     super(props);
     this.state = {
       searchQuery: '',
+      ageRange: 'All Ages',
+      spoilers: false,
       searchResult: null,
       error: '',
       addedToWatch: false
@@ -23,9 +25,18 @@ class Main extends React.Component {
     this.setState({ searchQuery: event.target.value });
   };
 
+  handleAgeRangeChange = (event) => {
+    this.setState({ ageRange: event.target.value });
+  };
+
+  handleSpoilerPreferenceChange = (event) => {
+    this.setState({ spoilers: event.target.checked });
+  };
+
   handleSearchSubmit = async (event) => {
     event.preventDefault();
-    let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for teenagers: language usage, alcohol and other drugs, portrayal of ex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.`;
+    let spoilers = this.state.spoilers ? ('Please avoid any spoilers.') : ('');
+    let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for people of ${this.state.ageRange} : language usage, alcohol and other drugs, portrayal of sex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.  ${spoilers}`;
 
     try {
       let updatedMovieFromAxios = await axios.post(
@@ -44,15 +55,6 @@ class Main extends React.Component {
       this.setState({ error: 'An error occurred. Please try again.' });
     }
   };
-
-
-  // addToWatchlist = async (movie) => {
-  //   try {
-  //     await axios.post(`${process.env.REACT_APP_SERVER}/movies`, movie);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   handleSaveMovie = async () => {
     if (this.props.auth0.isAuthenticated) {
@@ -95,8 +97,8 @@ class Main extends React.Component {
     return (
       <div className="div-accordion">
         <div className="card-div">
-          <Card style={{ width: '18rem' }} className="text-center">
-            <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original${searchResult.imageURL}`} alt="Movie Poster" />
+          <Card style={{ width: '25rem' }} className="text-center">
+            <Card.Img variant="top" src={searchResult.imageURL ? searchResult.imageURL : `https://place-hold.it/300x500/666/fff/000?text=${searchResult.title}`} alt="Movie Poster" />
             <Card.Body>
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
               {this.state.addedToWatch ? (
@@ -188,10 +190,26 @@ class Main extends React.Component {
                   onChange={this.handleSearchChange}
                   placeholder="Search Movies"
                 />
+                <Form.Select onChange={this.handleAgeRangeChange} aria-label="Default select example">
+                  <option>Select age range</option>
+                  <option value="ages 3-5">Ages 3-5</option>
+                  <option value="ages 6-10">Ages 6-10</option>
+                  <option value="ages 11-13">Ages 11-13</option>
+                  <option value="ages 14-17">Ages 14-17</option>
+                  <option value="all ages">All Ages</option>
+                </Form.Select>
+                <Form.Check // prettier-ignore
+                    type="switch"
+                    id="custom-switch"
+                    label="Avoid Spoilers?"
+                    onChange={this.handleSpoilerPreferenceChange}
+                  />
+
+                <Button className="search-button" variant="primary" type="submit">
+                  Search
+                </Button>  
               </Form.Group>
-              <Button variant="primary" type="submit">
-                Search
-              </Button>
+              
             </div>
           </Form>
         </div>
