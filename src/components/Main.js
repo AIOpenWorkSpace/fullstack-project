@@ -177,8 +177,8 @@ class Main extends React.Component {
     return (
 
       <div className="movie-container">
-        <h2>Title Restrictions for:</h2>
-        <p>Use the search bar to check the maturity level of movies.</p>
+        <h2>Personalized Movie Content Reviews</h2>
+        <p>Use the search bar to check the maturity level of movies or shows. Search results powered by OpenAI</p>
   
         <div className="search-container">
           <Form onSubmit={this.handleSearchSubmit}>
