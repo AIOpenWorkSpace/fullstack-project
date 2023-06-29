@@ -11,7 +11,7 @@ class Header extends React.Component {
         {/* <div className="title">Movies Company</div> */}
         <Navbar expand="lg" bg="dark" variant="dark" className="navigation">
           <Container className="nav-container">
-          <Navbar.Brand className="brand ml-auto" href="/"><FaFilm /> Movies Company</Navbar.Brand>
+          <Navbar.Brand className="brand ml-auto" href="/"><FaFilm /> CineWatch AI</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="ml-auto">
