@@ -1,5 +1,6 @@
+/* Had to escape character */
 .login-page {
-  background-image: url("../img/moviebackground.jpeg");
+  background-image: url("..\/img\/moviebackground.jpeg");
   background-size: cover;
   background-position: center;
   display: flex;
