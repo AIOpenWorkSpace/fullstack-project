@@ -110,9 +110,13 @@ class Main extends React.Component {
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
               {this.state.addedToWatch ? (
                 <Button variant="success">✅ Movie Saved to Watch List</Button>
-              ) : (this.state.isLoading ? (<div className="loading"><Spinner animation="border" /><span>Loading...</span></div>):
-              (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>))
-              }              
+              ) :  (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>)
+              }
+              {this.state.isLoading ? 
+                (<div className="loading">
+                  <Spinner animation="border" />
+                  <p>Loading...</p>
+                </div>) : <></>}   
             </Card.Body>
           </Card>
         </div>
