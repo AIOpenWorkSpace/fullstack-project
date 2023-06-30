@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
-import Spinner from 'react-bootstrap/Spinner';
+// import Spinner from 'react-bootstrap/Spinner';
 import { withAuth0 } from '@auth0/auth0-react';
 
 
