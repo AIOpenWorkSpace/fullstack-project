@@ -67,3 +67,13 @@ p {
   align-items: center;
   margin-bottom: 20px;
 }
+
+.loading-container {
+  display: flex;
+  align-items: center;
+}
+
+.loading-container p {
+  margin-left: 10px;
+}
+
