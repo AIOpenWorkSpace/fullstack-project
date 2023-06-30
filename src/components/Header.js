@@ -16,12 +16,9 @@ class Header extends React.Component {
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav className="ml-auto">
             <div className ="d-flex align-items-center">
-            <NavItem><Link to="/" >Main</Link> </NavItem>
-            <NavItem><Link to="/watchlist" >Watch List</Link> </NavItem>
-            <NavItem><Link to="/about" >Our Team</Link> </NavItem>
-            {/* <Nav.Link href="/">Main</Nav.Link>
-            <Nav.Link href="/watchlist">Watch List</Nav.Link>
-            <Nav.Link href="/about">Our Team</Nav.Link> */}
+            <NavItem><Link className="nav-link" to="/" >Main</Link> </NavItem>
+            <NavItem><Link className="nav-link" to="/watchlist" >Watch List</Link> </NavItem>
+            <NavItem><Link className="nav-link" to="/about" >Our Team</Link> </NavItem>
             <LogoutButton />
             </div>
           </Nav>

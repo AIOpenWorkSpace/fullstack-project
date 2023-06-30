@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
 import '../style/Main.css';
 import Card from 'react-bootstrap/Card';
-// import Spinner from 'react-bootstrap/Spinner';
+import Spinner from 'react-bootstrap/Spinner';
 import { withAuth0 } from '@auth0/auth0-react';
 
 
@@ -19,7 +19,7 @@ class Main extends React.Component {
       searchResult: null,
       error: '',
       addedToWatch: false,
-      isloading: false
+      isLoading: false
     };
   }
 
@@ -41,6 +41,8 @@ class Main extends React.Component {
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for people of ${this.state.ageRange} : language usage, alcohol and other drugs, portrayal of sex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.  Please provide a full response for each category even if the entire movie or show is not appropriate for viewers of this age.  ${spoilers}`;
 
     try {
+      this.setState({isLoading: true});
+      
       let updatedMovieFromAxios = await axios.post(
         `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
         { prompt }
@@ -49,12 +51,13 @@ class Main extends React.Component {
       this.setState({
         searchResult: updatedMovieFromAxios.data.data,
         error: '',
-        addedToWatch: false
+        addedToWatch: false,
+        isLoading: false
       });
       
     } catch (error) {
       console.log(error.message);
-      this.setState({ error: 'An error occurred. Please try again.' });
+      this.setState({ error: 'An error occurred. Please try again.', isLoading: false });
     }
   };
 
@@ -105,11 +108,9 @@ class Main extends React.Component {
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
               {this.state.addedToWatch ? (
                 <Button variant="success">✅ Movie Saved to Watch List</Button>
-              ) : (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>)
-              }
-
-
-              
+              ) : (this.state.isLoading ? (<Button><Spinner animation="border" />Loading...</Button>):
+              (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>))
+              }              
             </Card.Body>
           </Card>
         </div>
@@ -174,7 +175,6 @@ class Main extends React.Component {
   render() {
     const error = this.state.error;
     const searchResult = this.state.searchResult;
-    // const watchlist = this.state.watchlist; 
   
     return (
 

@@ -13,3 +13,9 @@ nav {
   margin: 0;
   padding:0;
 }
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+}
