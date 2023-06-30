@@ -35,12 +35,6 @@ class Main extends React.Component {
     this.setState({ spoilers: event.target.checked });
   };
 
-  componentDidUpdate(prevState) {
-    if (prevState.renderSpinner !== this.state.renderSpinner) {
-      this.forceUpdate();
-    }
-  }
-
   handleSearchSubmit = async (event) => {
     event.preventDefault();
     let spoilers = this.state.spoilers ? ('Please avoid any spoilers.') : ('');
@@ -48,8 +42,7 @@ class Main extends React.Component {
     this.setState({renderSpinner: true})
 
     try {      
-      console.log(this.state.renderSpinner);
-      
+
       let updatedMovieFromAxios = await axios.post(
         `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
         { prompt }
@@ -84,8 +77,6 @@ class Main extends React.Component {
           user: this.props.auth0.user.email
         }
       };
-
-      console.log(this.props.auth0.user.email);
   
       try {
         let savedMovie = await axios(config);
