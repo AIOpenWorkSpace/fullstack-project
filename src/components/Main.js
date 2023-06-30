@@ -40,13 +40,13 @@ class Main extends React.Component {
     let spoilers = this.state.spoilers ? ('Please avoid any spoilers.') : ('');
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for people of ${this.state.ageRange} : language usage, alcohol and other drugs, portrayal of sex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.  Please provide a full response for each category even if the entire movie or show is not appropriate for viewers of this age.  ${spoilers}`;
 
-    try {
-      this.setState({isLoading: true});
-      
+    try {      
       let updatedMovieFromAxios = await axios.post(
         `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
         { prompt }
       );
+
+      this.setState({isLoading: true});
 
       this.setState({
         searchResult: updatedMovieFromAxios.data.data,
