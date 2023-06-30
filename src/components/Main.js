@@ -19,7 +19,7 @@ class Main extends React.Component {
       searchResult: null,
       error: '',
       addedToWatch: false,
-      isLoading: false
+      renderSpinner: false
     };
   }
 
@@ -36,16 +36,17 @@ class Main extends React.Component {
   };
 
   handleLoading = () => {
-    this.setState({isLoading: true})
+    this.setState({renderSpinner: true})
   }
 
   handleSearchSubmit = async (event) => {
     event.preventDefault();
     let spoilers = this.state.spoilers ? ('Please avoid any spoilers.') : ('');
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for people of ${this.state.ageRange} : language usage, alcohol and other drugs, portrayal of sex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.  Please provide a full response for each category even if the entire movie or show is not appropriate for viewers of this age.  ${spoilers}`;
+    this.handleLoading();
 
     try {      
-      console.log(this.state.isLoading);
+      console.log(this.state.renderSpinner);
       let updatedMovieFromAxios = await axios.post(
         `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
         { prompt }
@@ -61,7 +62,7 @@ class Main extends React.Component {
       console.log(error.message);
       this.setState({ error: 'An error occurred. Please try again.'});
     } finally {
-      this.setState({isLoading: false});
+      this.setState({renderSpinner: false});
     }
   };
 
@@ -114,7 +115,7 @@ class Main extends React.Component {
                 <Button variant="success">✅ Movie Saved to Watch List</Button>
               ) :  (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>)
               }
-              {this.state.isLoading ? 
+              {this.state.renderSpinner ? 
                 (<div className="loading">
                   <Spinner animation="border" />
                   <p>Loading...</p>
@@ -191,10 +192,7 @@ class Main extends React.Component {
         <p>Use the search bar to check the maturity level of movies or shows. Search results powered by OpenAI</p>
   
         <div className="search-container">
-          <Form onSubmit={()=>{
-            this.handleLoading();
-            this.handleSearchSubmit();
-          }}>
+          <Form onSubmit={this.handleSearchSubmit}>
             <div className="d-flex">
               <Form.Group controlId="searchQuery" className="me-2">
                 <Form.Control
