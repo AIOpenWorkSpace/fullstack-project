@@ -35,15 +35,17 @@ class Main extends React.Component {
     this.setState({ spoilers: event.target.checked });
   };
 
+  handleLoading = () => {
+    this.setState({isLoading: true})
+  }
+
   handleSearchSubmit = async (event) => {
     event.preventDefault();
     let spoilers = this.state.spoilers ? ('Please avoid any spoilers.') : ('');
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for people of ${this.state.ageRange} : language usage, alcohol and other drugs, portrayal of sex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.  Please provide a full response for each category even if the entire movie or show is not appropriate for viewers of this age.  ${spoilers}`;
 
-    this.setState({isLoading: true});
-    console.log(this.state.isLoading);
-
     try {      
+      console.log(this.state.isLoading);
       let updatedMovieFromAxios = await axios.post(
         `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
         { prompt }
@@ -189,7 +191,10 @@ class Main extends React.Component {
         <p>Use the search bar to check the maturity level of movies or shows. Search results powered by OpenAI</p>
   
         <div className="search-container">
-          <Form onSubmit={this.handleSearchSubmit}>
+          <Form onSubmit={()=>{
+            this.handleLoading();
+            this.handleSearchSubmit();
+          }}>
             <div className="d-flex">
               <Form.Group controlId="searchQuery" className="me-2">
                 <Form.Control
