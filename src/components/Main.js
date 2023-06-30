@@ -193,7 +193,7 @@ class Main extends React.Component {
                   type="text"
                   value={this.state.searchQuery}
                   onChange={this.handleSearchChange}
-                  placeholder="Search Movies"
+                  placeholder="Search Movies or Shows"
                 />
                 <Form.Select onChange={this.handleAgeRangeChange} aria-label="Default select example">
                   <option>Select age range</option>
