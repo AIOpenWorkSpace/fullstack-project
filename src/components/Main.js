@@ -40,24 +40,26 @@ class Main extends React.Component {
     let spoilers = this.state.spoilers ? ('Please avoid any spoilers.') : ('');
     let prompt = `Evaluate "${this.state.searchQuery}" on all of these categories for people of ${this.state.ageRange} : language usage, alcohol and other drugs, portrayal of sex and romantic relationships, positive role models, positive messages, diverse representation, violence, product placement.  Please provide a full response for each category even if the entire movie or show is not appropriate for viewers of this age.  ${spoilers}`;
 
+    this.setState({isLoading: true});
+    console.log(this.state.isLoading);
+
     try {      
       let updatedMovieFromAxios = await axios.post(
         `${process.env.REACT_APP_SERVER}/ask/${this.state.searchQuery}`,
         { prompt }
       );
 
-      this.setState({isLoading: true});
-
       this.setState({
         searchResult: updatedMovieFromAxios.data.data,
         error: '',
         addedToWatch: false,
-        isLoading: false
       });
       
     } catch (error) {
       console.log(error.message);
-      this.setState({ error: 'An error occurred. Please try again.', isLoading: false });
+      this.setState({ error: 'An error occurred. Please try again.'});
+    } finally {
+      this.setState({isLoading: false});
     }
   };
 
@@ -108,7 +110,7 @@ class Main extends React.Component {
               <Card.Title>{searchResult.title.toUpperCase()}</Card.Title>
               {this.state.addedToWatch ? (
                 <Button variant="success">✅ Movie Saved to Watch List</Button>
-              ) : (this.state.isLoading ? (<Button><Spinner animation="border" />Loading...</Button>):
+              ) : (this.state.isLoading ? (<div className="loading"><Spinner animation="border" /><span>Loading...</span></div>):
               (<Button onClick={() => this.handleSaveMovie()}>Add to Watch List</Button>))
               }              
             </Card.Body>
