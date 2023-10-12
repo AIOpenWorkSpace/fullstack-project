@@ -106,10 +106,6 @@ class WatchList extends React.Component {
     this.setState({ isEditing: true });
   };
 
-  // handleDescriptionChange = (event) => {
-  //   this.setState({ editingDescription: event.target.value });
-  // };
-
   handleAccordionDescriptionChange = (event, section) => {
     const { value } = event.target;
     this.setState({ [`edited${section}Description`]: value });
@@ -175,38 +171,41 @@ class WatchList extends React.Component {
   renderMovieCards = () => {
     const { watchlist } = this.state;
     return (
-      <div className="card-container">
-        {watchlist.map((movie, index) => (
-          
-          <Card key={index} style={{ width: "25rem" }}>
-            <Card.Img variant="top" src={movie.imageURL ? movie.imageURL : `https://place-hold.it/300x450/666/fff/000?text=${movie.title}`} alt="Movie Poster" />
-            <Card.Body>
-              <div className="card-content">
-                <Card.Title className="movie-title">
-                  {movie.title.toUpperCase()}
-                </Card.Title>
-                <div className="button-group">
-                  <Button
-                    className="description-button"
-                    onClick={() => this.openModal(movie)}
-                  >
-                    View Description
-                  </Button>
-                  <Button
-                    className="delete-button"
-                    variant="danger"
-                    onClick={() => this.deleteMovie(movie._id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
-        ))}
+      <div className="container-fluid">
+        <div className="row">
+          {watchlist.map((movie, index) => (
+            <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3">
+              <Card>
+                <Card.Img variant="top" src={movie.imageURL ? movie.imageURL : `https://place-hold.it/300x450/666/fff/000?text=${movie.title}`} alt="Movie Poster" />
+                <Card.Body>
+                  <div className="card-content">
+                    <Card.Title className="movie-title">
+                      {movie.title.toUpperCase()}
+                    </Card.Title>
+                    <div className="button-group">
+                      <Button
+                        className="description-button"
+                        onClick={() => this.openModal(movie)}
+                      >
+                        View Description
+                      </Button>
+                      <Button
+                        className="delete-button"
+                        variant="danger"
+                        onClick={() => this.deleteMovie(movie._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+          ))}
+        </div>
       </div>
     );
-  };
+  };  
 
   render() {
     const {
