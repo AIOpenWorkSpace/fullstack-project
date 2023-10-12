@@ -3,9 +3,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import WatchList from './components/WatchList';
 import About from './components/About';
-// import Footer from './components/Footer';
 import Login from './Login';
-// import Logout from './Logout';
 import { withAuth0 } from '@auth0/auth0-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
