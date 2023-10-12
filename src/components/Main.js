@@ -186,7 +186,6 @@ class Main extends React.Component {
 
   render() {
     const error = this.state.error;
-    const searchResult = this.state.searchResult;
 
     return (
 
